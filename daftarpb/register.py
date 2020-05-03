@@ -41,9 +41,9 @@ class MySolver(Solver):
         await self.page.type('input[name="email"]', self.data['email'])
         await self.page.click('a[href="javascript:emailCheck();"]')
         while True:
-            r = requests.get(sys.argv[2]+"/email.php?email="+self.data['email']+"&password="+self.data['password'])
             self.log('wait 60')
             time.sleep(60)
+            r = requests.get(sys.argv[2]+"/email.php?email="+self.data['email']+"&password="+self.data['password'])
             if r.content:
                 code = json.loads(r.content)
                 if code['token']:

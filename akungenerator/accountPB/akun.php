@@ -61,5 +61,5 @@ function generateRandomName($length = 8) {
         $randomString .= $characters[rand(0, $charactersLength - 1)];
         $randomString .= $vocal[rand(0, $vocalLength - 1)];
     }
-    return '1'.$randomString;
+    return $randomString;
 }

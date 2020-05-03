@@ -19,14 +19,14 @@ echo MYSQL DATABASE :
 read MYSQL_DB
 
 docker container create \
--e CP_USER = $CP_USER \
--e CP_PASS = $CP_PASS \
--e CP_SERVER = $CP_SERVER \
--e MAIL_SERVER = $MAIL_SERVER \
--e MYSQL_SERVER = $MYSQL_SERVER \
--e MYSQL_USER = $MYSQL_USER \
--e MYSQL_PASS = $MYSQL_PASS \
--e MYSQL_DB = $MYSQL_DB \
+-e CP_USER = '$CP_USER' \
+-e CP_PASS = '$CP_PASS' \
+-e CP_SERVER = '$CP_SERVER' \
+-e MAIL_SERVER = '$MAIL_SERVER' \
+-e MYSQL_SERVER = '$MYSQL_SERVER' \
+-e MYSQL_USER = '$MYSQL_USER' \
+-e MYSQL_PASS = '$MYSQL_PASS' \
+-e MYSQL_DB = '$MYSQL_DB' \
 --name $name --cpus=0.9 akungenerator
 docker container start $name
 docker network connect akun_network $name

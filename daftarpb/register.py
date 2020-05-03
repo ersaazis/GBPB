@@ -35,10 +35,12 @@ class MySolver(Solver):
         self.log('id : '+str(self.data['id']))
         await self.page.addScriptTag({'content' : 'alert = function (){};'})
         await self.page.type('input[name="userid"]', self.data['username'])
+        time.sleep(1)
         await self.page.click('a[href="javascript:useridCheck();"]')
         await self.page.type('input[name="password"]', self.data['password'])
         await self.page.type('input[name="repassword"]', self.data['password'])
         await self.page.type('input[name="email"]', self.data['email'])
+        time.sleep(1)
         await self.page.click('a[href="javascript:emailCheck();"]')
         while True:
             self.log('wait 60')
@@ -49,8 +51,10 @@ class MySolver(Solver):
                 if code['token']:
                     await self.page.type('input[name="code"]', code['token'])
                     self.log('token : '+code['token'])
+                    time.sleep(1)
+                    await self.page.click('a[href="javascript:emailVerify();"]')
+                    time.sleep(3)
                     break
-        await self.page.click('a[href="javascript:emailVerify();"]')
         await self.page.click('input[id="join_agree"]')
 
     async def wait_for_frames(self):
@@ -58,11 +62,12 @@ class MySolver(Solver):
 
     async def on_finish(self):
         # Click button Send
+        self.log('Send Button ...')
+        await self.page.click('a[onclick="javascript:sendIt();"]')
+        await self.page.addScriptTag({'content' : 'javascript:sendIt();'})
         self.log('GET '+sys.argv[2]+"/simpan.php?id="+str(self.data['id']))
         requests.get(sys.argv[2]+"/simpan.php?id="+str(self.data['id']))
         self.log('Create Account Success ...')
-        await self.page.click('a[onclick="javascript:sendIt();"]')
-        await self.page.addScriptTag({'content' : 'javascript:sendIt();'})
         time.sleep(20)
 
 client = MySolver(

@@ -34,7 +34,7 @@ if($result['status'] == 1){
     // echo "<input type='text' value='$email' id='email'> <br>";
     // echo "<a id='otp' target='_blank' href='email.php?password=$password&email=$email'><h1>OTP</h1></a> <br>";
     // echo "<a id='simpan' href='simpan.php?id=$id'><h1>SIMPAN</h1></a> <br>";
-    $id=1;
+    // $id=1;
     echo json_encode(array(
         "id"=>$id,
         "username"=>$username,

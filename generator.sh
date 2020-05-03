@@ -8,7 +8,7 @@ read SERVER
 echo PORT VNC :
 read PORT
 
-docker container create 
+docker container create \
 -e PROXY = $PROXY \
 -e SERVER = $SERVER \
 -p $PORT:5900 \

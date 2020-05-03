@@ -18,7 +18,7 @@ read MYSQL_PASS
 echo MYSQL DATABASE :
 read MYSQL_DB
 
-docker container create 
+docker container create \
 -e CP_USER = $CP_USER \
 -e CP_PASS = $CP_PASS \
 -e CP_SERVER = $CP_SERVER \

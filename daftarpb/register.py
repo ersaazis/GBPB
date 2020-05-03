@@ -64,7 +64,6 @@ class MySolver(Solver):
         # Click button Send
         self.log('Send Button ...')
         await self.page.click('a[onclick="javascript:sendIt();"]')
-        await self.page.addScriptTag({'content' : 'javascript:sendIt();'})
         self.log('GET '+sys.argv[2]+"/simpan.php?id="+str(self.data['id']))
         requests.get(sys.argv[2]+"/simpan.php?id="+str(self.data['id']))
         self.log('Create Account Success ...')

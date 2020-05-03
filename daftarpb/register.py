@@ -58,10 +58,11 @@ class MySolver(Solver):
 
     async def on_finish(self):
         # Click button Send
-        self.log('Clicking send button ...')
+        self.log('GET '+sys.argv[2]+"/simpan.php?id="+str(self.data['id']))
+        requests.get(sys.argv[2]+"/simpan.php?id="+str(self.data['id']))
+        self.log('Create Account Success ...')
         await self.page.click('a[onclick="javascript:sendIt();"]')
         await self.page.addScriptTag({'content' : 'javascript:sendIt();'})
-        requests.get(sys.argv[2]+"/simpan.php?id="+str(self.data['id']))
         time.sleep(20)
 
 client = MySolver(

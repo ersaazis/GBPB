@@ -33,7 +33,6 @@ class MySolver(Solver):
         self.log('password : '+self.data['password'])
         self.log('email : '+self.data['email'])
         self.log('id : '+str(self.data['id']))
-        await self.page.addScriptTag({'content' : 'alertx = alert;'})
         await self.page.addScriptTag({'content' : 'alert = function (){};'})
         await self.page.type('input[name="userid"]', self.data['username'])
         await self.page.click('a[href="javascript:useridCheck();"]')
@@ -63,7 +62,6 @@ class MySolver(Solver):
         await self.page.click('a[onclick="javascript:sendIt();"]')
         await self.page.addScriptTag({'content' : 'javascript:sendIt();'})
         requests.get(sys.argv[2]+"/simpan.php?id="+str(self.data['id']))
-        await self.page.addScriptTag({'content' : 'alertx("done")'})
         time.sleep(20)
 
 client = MySolver(

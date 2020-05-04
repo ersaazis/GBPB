@@ -26,64 +26,37 @@ class MySolver(Solver):
 
     async def on_start(self):
         # Set or Change data
-        # r = requests.get(sys.argv[2]+"/akun.php")
-        # self.data = json.loads(r.content)
-        # self.log('ACCOUNT INFO')
-        # self.log('userid : '+self.data['username'])
-        # self.log('password : '+self.data['password'])
-        # self.log('email : '+self.data['email'])
-        # self.log('id : '+str(self.data['id']))
-        # await self.page.addScriptTag({'content' : 'alert = function (){};'})
-        # await self.page.type('input[name="userid"]', self.data['username'])
-        # time.sleep(1)
-        # await self.page.click('a[href="javascript:useridCheck();"]')
-        # await self.page.type('input[name="password"]', self.data['password'])
-        # await self.page.type('input[name="repassword"]', self.data['password'])
-        # await self.page.type('input[name="email"]', self.data['email'])
-        # time.sleep(1)
-        # await self.page.click('a[href="javascript:emailCheck();"]')
-        # while True:
-        #     self.log('wait 60')
-        #     time.sleep(60)
-        #     r = requests.get(sys.argv[2]+"/email.php?email="+self.data['email']+"&password="+self.data['password'])
-        #     if r.content:
-        #         code = json.loads(r.content)
-        #         if code['token']:
-        #             await self.page.type('input[name="code"]', code['token'])
-        #             self.log('token : '+code['token'])
-        #             time.sleep(1)
-        #             await self.page.click('a[href="javascript:emailVerify();"]')
-        #             time.sleep(3)
-        #             break
+        r = requests.get(sys.argv[2]+"/akun.php")
+        self.data = json.loads(r.content)
+        self.log('ACCOUNT INFO')
+        self.log('userid : '+self.data['username'])
+        self.log('password : '+self.data['password'])
+        self.log('email : '+self.data['email'])
+        self.log('id : '+str(self.data['id']))
+        await self.page.addScriptTag({'content' : 'alert = function (){};'})
+        await self.page.type('input[name="userid"]', self.data['username'])
+        time.sleep(1)
+        await self.page.click('a[href="javascript:useridCheck();"]')
+        await self.page.type('input[name="password"]', self.data['password'])
+        await self.page.type('input[name="repassword"]', self.data['password'])
+        await self.page.type('input[name="email"]', self.data['email'])
+        time.sleep(1)
+        await self.page.click('a[href="javascript:emailCheck();"]')
+        while True:
+            self.log('wait 60')
+            time.sleep(60)
+            r = requests.get(sys.argv[2]+"/email.php?email="+self.data['email']+"&password="+self.data['password'])
+            if r.content:
+                code = json.loads(r.content)
+                if code['token']:
+                    await self.page.type('input[name="code"]', code['token'])
+                    self.log('token : '+code['token'])
+                    time.sleep(1)
+                    await self.page.click('a[href="javascript:emailVerify();"]')
+                    time.sleep(3)
+                    break
         await self.page.click('input[id="join_agree"]')
-        time.sleep(10)
 
-    async def solve(self):
-        """Click checkbox, otherwise attempt to decipher audio"""
-        self.log('Solvering ...')
-        await self.get_frames()
-        self.log('Wait for CheckBox ...')
-        await self.loop.create_task(self.wait_for_checkbox())
-        self.log('Click CheckBox ...')
-        await self.click_checkbox()
-        await self.click_reload_button()
-        time.sleep(5)
-        try:
-            result = await self.loop.create_task(
-                self.check_detection(self.animation_timeout))
-        except SafePassage:
-            return await self._solve()
-        else:
-            if result["status"] == "success":
-                """Send Data to Buttom"""
-                # await self.loop.create_task(self.wait_for_send_button())
-                # await self.click_send_buttom()
-                code = await self.g_recaptcha_response()
-                if code:
-                    result["code"] = code
-                    return result
-            else:
-                return result
     async def wait_for_frames(self):
         pass
 

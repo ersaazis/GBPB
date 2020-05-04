@@ -56,6 +56,7 @@ class MySolver(Solver):
         #             time.sleep(3)
         #             break
         await self.page.click('input[id="join_agree"]')
+        time.sleep(10)
 
     async def solve(self):
         """Click checkbox, otherwise attempt to decipher audio"""

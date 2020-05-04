@@ -57,6 +57,31 @@ class MySolver(Solver):
                     break
         await self.page.click('input[id="join_agree"]')
 
+    async def solve(self):
+        """Click checkbox, otherwise attempt to decipher audio"""
+        self.log('Solvering ...')
+        await self.get_frames()
+        self.log('Wait for CheckBox ...')
+        await self.loop.create_task(self.wait_for_checkbox())
+        self.log('Click CheckBox ...')
+        await self.click_checkbox()
+        await self.click_reload_button()
+        try:
+            result = await self.loop.create_task(
+                self.check_detection(self.animation_timeout))
+        except SafePassage:
+            return await self._solve()
+        else:
+            if result["status"] == "success":
+                """Send Data to Buttom"""
+                # await self.loop.create_task(self.wait_for_send_button())
+                # await self.click_send_buttom()
+                code = await self.g_recaptcha_response()
+                if code:
+                    result["code"] = code
+                    return result
+            else:
+                return result
     async def wait_for_frames(self):
         pass
 

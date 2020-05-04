@@ -7,7 +7,7 @@ while(1){
     if($cek == '0')
         break;
 }
-$password=generateRandomString(8);
+$password=generateRandomString1(3).generateRandomString2(3).generateRandomString3(2);
 $domain='zenbunime.com';
 $email=$username."@".$domain;
 
@@ -42,8 +42,26 @@ if($result['status'] == 1){
         "email"=>$email,
     ));
 }
-function generateRandomString($length = 10) {
-    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+function generateRandomString1($length = 10) {
+    $characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    $charactersLength = strlen($characters);
+    $randomString = '';
+    for ($i = 0; $i < $length; $i++) {
+        $randomString .= $characters[rand(0, $charactersLength - 1)];
+    }
+    return $randomString;
+}
+function generateRandomString2($length = 10) {
+    $characters = 'abcdefghijklmnopqrstuvwxyz';
+    $charactersLength = strlen($characters);
+    $randomString = '';
+    for ($i = 0; $i < $length; $i++) {
+        $randomString .= $characters[rand(0, $charactersLength - 1)];
+    }
+    return $randomString;
+}
+function generateRandomString3($length = 10) {
+    $characters = '0123456789';
     $charactersLength = strlen($characters);
     $randomString = '';
     for ($i = 0; $i < $length; $i++) {
